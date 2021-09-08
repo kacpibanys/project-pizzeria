@@ -87,6 +87,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion(){
@@ -144,7 +145,6 @@
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
         console.log(paramId, param);
-
         // for every option in this category
         for(let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
@@ -155,6 +155,7 @@
             // check if the option is not default
             if(option != option.default) {
               // add option price to price variable
+
               price = price + option.price;
             }
           } else {
@@ -164,7 +165,13 @@
               price = price - option.price;
             }
           }
+          const imageClass = '.' + paramId + '-' + optionId;
+          const optionImage = thisProduct.imageWrapper.querySelector('imageClass');
+          console.log('optionImage', optionImage);
+          console.log('imageClass', imageClass);
+          // if(optionSelected == option.default){
 
+          // }
         }
       }
 
