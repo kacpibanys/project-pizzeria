@@ -97,16 +97,16 @@
 
       header.addEventListener('click', function(event) {
         event.preventDefault();
-
+        const wasActive = thisProduct.element.classList.contains(classNames.menuProduct.wrapperActive);
         const activeProductList = document.querySelectorAll('.product.active');
 
         for(let product of activeProductList){
           product.classList.remove(classNames.menuProduct.wrapperActive);
+
         }
 
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-
-
+        wasActive ? thisProduct.element.classList.remove(classNames.menuProduct.wrapperActive): thisProduct.element.classList.add(classNames.menuProduct.wrapperActive);
       });
     }
   }
