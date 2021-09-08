@@ -61,9 +61,6 @@
       thisProduct.renderInMenu();
       thisProduct.getElements();
       thisProduct.initAccordion();
-
-
-      console.log('new Product:', thisProduct);
     }
 
 
@@ -105,7 +102,6 @@
 
         }
 
-        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
         wasActive ? thisProduct.element.classList.remove(classNames.menuProduct.wrapperActive): thisProduct.element.classList.add(classNames.menuProduct.wrapperActive);
       });
     }
@@ -113,7 +109,7 @@
   const app = {
     initMenu: function(){
       const thisApp = this;
-      console.log('thisApp.data', thisApp.data);
+
 
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
@@ -128,11 +124,11 @@
 
     init: function(){
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
+      // console.log('*** App starting ***');
+      // console.log('thisApp:', thisApp);
+      // console.log('classNames:', classNames);
+      // console.log('settings:', settings);
+      // console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
