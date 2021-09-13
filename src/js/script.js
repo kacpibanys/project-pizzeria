@@ -172,13 +172,18 @@
               price = price - option.price;
             }
           }
+
           const imageClass = '.' + paramId + '-' + optionId;
-          const optionImage = thisProduct.imageWrapper.querySelector('imageClass');
+          const optionImage = thisProduct.imageWrapper.querySelector(imageClass);
           console.log('optionImage', optionImage);
           console.log('imageClass', imageClass);
-          // if(optionSelected == option.default){
-
-          // }
+          if(optionImage) {
+            if(formData[paramId].includes(optionId)) {
+              optionImage.classList.add('active');
+            } else {
+              optionImage.classList.remove('active');
+            }
+          }
         }
       }
 
@@ -208,31 +213,29 @@
     }
 
     setValue(value){
+
       const thisWidget = this;
       const newValue = parseInt(value);
 
-      // const minValue = settings.amountWidget.defaultMin;
-      // const maxValue = settings.amountWidget.defaultMax;
+      const minValue = settings.amountWidget.defaultMin;
+      const maxValue = settings.amountWidget.defaultMax;
 
       /* TODO: Add validation */
       if(thisWidget.value !== newValue && !isNaN(newValue)){
 
         thisWidget.value = newValue;
 
-        // if(thisWidget.input.value > maxValue){
-        //   thisWidget.value = maxValue;
+        if( thisWidget.value> maxValue){
+          thisWidget.value = maxValue;
 
-        // }
-        // if(thisWidget.input.value < minValue){
-        //   thisWidget.value = minValue;
-
-
-        // {
+        }
+        if( thisWidget.value < minValue){
+          thisWidget.value = minValue;
+        }
 
       }
-
-      thisWidget.value = newValue;
       thisWidget.input.value = thisWidget.value;
+
     }
 
     initActions(){
