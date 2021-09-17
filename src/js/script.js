@@ -59,6 +59,9 @@
       wrapperActive: 'active',
       imageVisible: 'active',
     },
+    cart: {
+      wrapperActive: 'active',
+    },
   };
 
   const settings = {
@@ -314,7 +317,6 @@
       const thisCart = this;
 
       thisCart.dom = {};
-
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
     }
@@ -324,7 +326,8 @@
 
       thisCart.dom.toggleTrigger.addEventListener('click', function(){
 
-        thisCart.dom.wrapper.toggle(classNames.cart.wrapperActive);
+        const thisCart = this;
+        thisCart.dom.toggle(classNames.cart.wrapperActive);
       });
 
     }
