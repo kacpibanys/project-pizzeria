@@ -326,7 +326,7 @@
 
       thisCart.dom.toggleTrigger.addEventListener('click', function(){
 
-        thisCart.dom.wrapper.toggle(classNames.cart.wrapperActive);
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
 
     }
