@@ -122,12 +122,13 @@
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      thisProduct.name = thisProduct.element.querySelector(select.all.menuProducts);
     }
 
     initAccordion(){
       const thisProduct = this;
 
-      const header = this.element.querySelector(select.menuProduct.clickable);
+      const header = thisProduct.element.querySelector(select.menuProduct.clickable);
 
       header.addEventListener('click', function(event) {
         event.preventDefault();
@@ -230,12 +231,12 @@
       price *= thisProduct.amountWidget.value;
       thisProduct.price = price;
       thisProduct.priceElem.innerHTML = price;
-      console.log('PRICE SINGLE:', thisProduct.priceSingle);
+
     }
 
     addToCart(){
       const thisProduct = this;
-      app.cart.add(thisProduct.prepareCartProduct);
+      app.cart.add(thisProduct.prepareCartProduct());
     }
 
     prepareCartProduct(){
@@ -243,12 +244,11 @@
 
       const productSummary = {};
       productSummary.id = thisProduct.id;
-      productSummary.name = thisProduct.name;
-      productSummary.amount = thisProduct.amount;
+      productSummary.name = thisProduct.element.querySelector(select.menuProduct.clickable);
+      productSummary.amount = thisProduct.amountWidget.value;
       productSummary.priceSingle = thisProduct.priceSingle;
       productSummary.price = thisProduct.price;
       productSummary.params = {};
-      console.log('PRODULT SUMMARY:', productSummary);
 
       return productSummary;
     }
