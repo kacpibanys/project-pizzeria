@@ -122,7 +122,8 @@
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
-      thisProduct.name = thisProduct.element.querySelector(select.all.menuProducts);
+      const productNameHtmlElement = thisProduct.element.querySelector('.product__name');
+      thisProduct.name = productNameHtmlElement.getAttribute('data-name');
     }
 
     initAccordion(){
@@ -228,7 +229,11 @@
       // update calculated price in the HTML
       thisProduct.priceSingle;
       thisProduct.priceSingle = price;
-      price *= thisProduct.amountWidget.value;
+
+      if (thisProduct.amountWidget) {
+        price *= thisProduct.amountWidget.value;
+      }
+
       thisProduct.price = price;
       thisProduct.priceElem.innerHTML = price;
 
@@ -244,7 +249,7 @@
 
       const productSummary = {};
       productSummary.id = thisProduct.id;
-      productSummary.name = thisProduct.element.querySelector(select.menuProduct.clickable);
+      productSummary.name = thisProduct.name;
       productSummary.amount = thisProduct.amountWidget.value;
       productSummary.priceSingle = thisProduct.priceSingle;
       productSummary.price = thisProduct.price;
