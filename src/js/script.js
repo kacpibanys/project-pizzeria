@@ -1,5 +1,7 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
+const { utils } = require("stylelint");
+
 {
   'use strict';
 
@@ -94,8 +96,8 @@
       thisProduct.initAmountWidget();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
-
       thisProduct.processOrder();
+
     }
 
 
@@ -122,7 +124,8 @@
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
-      thisProduct.name = thisProduct.element.querySelector(select.all.menuProducts);
+      const productNameHTML = thisProduct.element.querySelector('.product__name');
+      thisProduct.name = productNameHTML.getAttribute('data-name');
     }
 
     initAccordion(){
@@ -228,7 +231,9 @@
       // update calculated price in the HTML
       thisProduct.priceSingle;
       thisProduct.priceSingle = price;
-      price *= thisProduct.amountWidget.value;
+      if(thisProduct.amountWidget){
+        price *= thisProduct.amountWidget.value;
+      }
       thisProduct.price = price;
       thisProduct.priceElem.innerHTML = price;
 
@@ -244,15 +249,44 @@
 
       const productSummary = {};
       productSummary.id = thisProduct.id;
-      productSummary.name = thisProduct.element.querySelector(select.menuProduct.clickable);
+      productSummary.name = thisProduct.name;
       productSummary.amount = thisProduct.amountWidget.value;
       productSummary.priceSingle = thisProduct.priceSingle;
       productSummary.price = thisProduct.price;
-      productSummary.params = {};
+      productSummary.params = this.prepareCartProductParams(thisProduct);
 
       return productSummary;
     }
 
+    prepareCartProductParams(){
+      const thisProduct = this;
+
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      const params = {};
+
+      // for very category (param)
+      for(let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+
+        // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        };
+
+        // for every option in this category
+        for(let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+
+          if(optionSelected) {
+            // option is selected!
+            params[paramId].options = option;
+          }
+        }
+      }
+      return params;
+    }
   }
 
   class AmountWidget{
@@ -344,6 +378,7 @@
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.templateOf.menuProduct);
     }
 
     initActions() {
@@ -357,7 +392,14 @@
     }
 
     add(menuProduct){
-      // const thisCart = this;
+      const thisCart = this;
+      const genereatedHTML = templates.cartProduct(thisCart.data);
+
+      thisCart.element = utils.createDOMFromHTML(genereatedHTML);
+
+      const menuContainer = document.querySelector(select.containerOf.cart);
+
+      menuContainer.appendChild(thisCart.dom.productList);
 
       console.log('adding product', menuProduct);
     }
