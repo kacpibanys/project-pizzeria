@@ -411,17 +411,17 @@
   class CartProduct {
     constructor(menuProduct, element){
       const thisCartProduct = this;
-      
+
       thisCartProduct.id = menuProduct.id;
       thisCartProduct.amount = menuProduct.amount;
       thisCartProduct.name = menuProduct.name;
       thisCartProduct.params = menuProduct.params;
       thisCartProduct.priceSingle = menuProduct.priceSingle;
       thisCartProduct.price = menuProduct.price;
-      
+
 
       thisCartProduct.getElements(element);
-      thisCartProduct.AmountWidget();
+      thisCartProduct.initAmountWidget();
       console.log('thisCartProduct', thisCartProduct);
 
     }
@@ -431,17 +431,27 @@
       thisCartProduct.dom = {};
       thisCartProduct.dom.wrapper = element;
       thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
-      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.amountWidgetElem = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+
     }
 
     initAmountWidget() {
       const thisCartProduct = this;
-      thisCartProduct.dom.amountWidget.addEventListener('XXXX', function(){
-
+      thisCartProduct.dom.amountWidgetElem.addEventListener('updated', function(){
+        thisCartProduct.recalculate(thisCartProduct.dom.amountWidget.value);
       });
-      thisCartProduct.dom.amountWidget = new AmountWidget(XXXX)
+
+      thisCartProduct.dom.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidgetElem);
+    }
+
+
+    recalculate(amount) {
+      this.amount = Number(amount);
+      this.price = Number(this.priceSingle * amount);
+
+      this.dom.price.innerHTML = this.price;
     }
   }
 
