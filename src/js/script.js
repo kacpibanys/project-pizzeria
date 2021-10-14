@@ -370,6 +370,10 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = document.querySelector(select.cart.productList);
+      thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelector(select.cart.totalPrice);
+      thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
+      thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
     }
 
     initActions() {
@@ -410,18 +414,19 @@
 
 
       if (totalNumber > 0) {
-        thisCart.totalNumber = totalNumber;
-        thisCart.subtotalPrice = subtotalPrice;
-
-        thisCart.totalPrice = thisCart.subtotalPrice + deliveryFee;
+        thisCart.dom.totalNumber.innerHTML = totalNumber;
+        thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+        thisCart.dom.totalPrice.innerHTML = subtotalPrice + deliveryFee;
       } else {
-        thisCart.totalNumber = 0;
-        thisCart.subtotalPrice = 0;
-        thisCart.totalPrice = 0;
+        thisCart.dom.totalNumber.innerHTML = 0;
+        thisCart.dom.subtotalPrice.innerHTML = 0;
+        thisCart.dom.totalPrice.innerHTML = 0;
+        thisCart.dom.deliveryFee.innerHTML = 0;
       }
-      console.log('totalNumber', thisCart.totalNumber);
-      console.log('subtotalPrice', thisCart.subtotalPrice);
-      console.log('totalPrice', thisCart.totalPrice);
+      console.log('totalNumber', thisCart.dom.totalNumber);
+      console.log('subtotalPrice', thisCart.dom.subtotalPrice);
+      console.log('totalPrice', thisCart.dom.totalPrice);
     }
   }
 
@@ -450,10 +455,7 @@
       thisCartProduct.dom.amountWidgetElem = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
-      thisCartProduct.dom.deliverysubtotalPriceFee = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.deliveryFee);
-      thisCartProduct.dom.subtotalPrice = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.subtotalPrice);
-      thisCartProduct.dom.totalPrice = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.totalPrice);
-      thisCartProduct.dom.totalNumber = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.totalNumber);
+
     }
 
     initAmountWidget() {
