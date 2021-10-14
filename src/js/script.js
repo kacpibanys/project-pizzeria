@@ -450,6 +450,10 @@
       thisCartProduct.dom.amountWidgetElem = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+      thisCartProduct.dom.deliverysubtotalPriceFee = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.deliveryFee);
+      thisCartProduct.dom.subtotalPrice = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.subtotalPrice);
+      thisCartProduct.dom.totalPrice = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.totalPrice);
+      thisCartProduct.dom.totalNumber = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.totalNumber);
     }
 
     initAmountWidget() {
