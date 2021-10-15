@@ -344,7 +344,9 @@
     announce(){
       const thisWidget = this;
 
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
       thisWidget.element.dispatchEvent(event);
     }
 
@@ -371,7 +373,7 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = document.querySelector(select.cart.productList);
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
-      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelector(select.cart.totalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
     }
@@ -382,6 +384,12 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function(){
 
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+      thisCart.dom.productList.addEventListener('updated', function(){
+        thisCart.update();
+      });
+      thisCart.dom.productList.addEventListener('remove', function(event){
+        thisCart.remove(event.detail.cartProduct);
       });
 
     }
@@ -417,6 +425,9 @@
         thisCart.dom.totalNumber.innerHTML = totalNumber;
         thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
         thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+        for (let totalPrice of thisCart.dom.totalPrice) {
+          totalPrice.innerHTML = subtotalPrice + deliveryFee;
+        }
         thisCart.dom.totalPrice.innerHTML = subtotalPrice + deliveryFee;
       } else {
         thisCart.dom.totalNumber.innerHTML = 0;
@@ -427,6 +438,14 @@
       console.log('totalNumber', thisCart.dom.totalNumber);
       console.log('subtotalPrice', thisCart.dom.subtotalPrice);
       console.log('totalPrice', thisCart.dom.totalPrice);
+    }
+    remove(cartProduct){
+      const thisCart=this;
+      cartProduct.dom.wrapper.remove();
+      const indexOfCartProduct = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice(indexOfCartProduct, 1);
+      thisCart.update();
+
     }
   }
 
@@ -444,6 +463,8 @@
 
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
+      thisCartProduct.initActions();
+
 
     }
 
@@ -482,7 +503,30 @@
 
 
     }
+    remove(){
+      const thisCartProduct = this;
 
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+      console.log('czy wywolana');
+    }
+    initActions(){
+      const thisCartProduct=this;
+
+      thisCartProduct.dom.remove.addEventListener('click', function(){
+        thisCartProduct.remove();
+      });
+
+      thisCartProduct.dom.edit.addEventListener('click', function(){
+
+      });
+    }
   }
 
   const app = {
