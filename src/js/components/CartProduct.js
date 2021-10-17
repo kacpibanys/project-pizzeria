@@ -80,7 +80,7 @@ class CartProduct {
     });
 
     thisCartProduct.dom.wrapper.dispatchEvent(event);
-    console.log('czy wywolana');
+    // console.log('czy wywolana');
   }
 
   initActions(){

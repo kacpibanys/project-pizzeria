@@ -93,9 +93,9 @@ class Cart {
       thisCart.dom.totalPrice.innerHTML = 0;
       thisCart.dom.deliveryFee.innerHTML = 0;
     }
-    console.log('totalNumber', thisCart.dom.totalNumber);
-    console.log('subtotalPrice', thisCart.dom.subtotalPrice);
-    console.log('totalPrice', thisCart.dom.totalPrice);
+    // console.log('totalNumber', thisCart.dom.totalNumber);
+    // console.log('subtotalPrice', thisCart.dom.subtotalPrice);
+    // console.log('totalPrice', thisCart.dom.totalPrice);
   }
   remove(cartProduct){
     const thisCart=this;
