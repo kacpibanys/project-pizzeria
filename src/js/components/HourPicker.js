@@ -18,6 +18,7 @@ class HourPicker extends BaseWidget{
     // eslint-disable-next-line no-undef
     rangeSlider.create(thisWidget.dom.input);
     thisWidget.dom.input.addEventListener('input', function(){
+      console.log('sssss')
       thisWidget.value = thisWidget.dom.input.value;
     });
   }
