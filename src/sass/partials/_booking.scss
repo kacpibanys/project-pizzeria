@@ -175,6 +175,11 @@
     }
   }
 
+  &.selected {
+    background-color: $color-success;
+    border: 2px solid $color-light;
+  }
+
   [data-table="1"] {
     left: 40px;
     top: 40px;
@@ -187,6 +192,7 @@
     height: 100px;
     line-height: 100px;
   }
+
 
   [data-table="3"] {
     right: 40px;
