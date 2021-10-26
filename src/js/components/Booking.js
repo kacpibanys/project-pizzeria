@@ -203,6 +203,10 @@ class Booking {
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.tablesWrapper = thisBooking.dom.wrapper.querySelector(select.containerOf.tables);
+    thisBooking.dom.bookingForm = thisBooking.dom.wrapper.querySelector('.booking-form');
+    thisBooking.dom.phone = thisBooking.dom.bookingForm.querySelector('input[name="phone"]');
+    thisBooking.dom.address = thisBooking.dom.bookingForm.querySelector('input[name="address"]');
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
   }
 
   initWidgets(){
@@ -214,6 +218,10 @@ class Booking {
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
+      thisBooking.initTables();
+    });
+    thisBooking.dom.tablesWrapper.addEventListener('click', function(event){
+      thisBooking.initTables(event);
     });
     this.dom.wrapper.querySelector('.booking-form').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -230,15 +238,15 @@ class Booking {
       duration: parseInt(thisBooking.hoursAmount.value),
       ppl: parseInt(thisBooking.peopleAmount.value),
       starters: [],
-      phone: '44444',
-      address: '3434334@gmail.com',
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
     };
 
-    // for (let starter of thisBooking.dom.starters) {
-    //   if (starter.checked == true) {
-    //     payload.starters.push(starter.value);
-    //   }
-    // }
+    for (let starter of thisBooking.dom.starters) {
+      if (starter.checked == true) {
+        payload.starters.push(starter.value);
+      }
+    }
 
     const options = {
       method: 'POST',
@@ -254,6 +262,8 @@ class Booking {
       // eslint-disable-next-line no-unused-vars
       }).then(function(parsedResponse){
         thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+        thisBooking.updateDOM();
+        thisBooking.initTables();
       });
   }
 }
