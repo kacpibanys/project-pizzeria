@@ -215,10 +215,21 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+
+
+    this.dom.wrapper.querySelector('.booking-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
   }
   sendBooking() {
     const thisBooking = this;
-    const url = settings.db.url + '/' + settings.db.booking;
+    const url = settings.db.url + '/' + settings.db.bookings;
+
+
+    console.log('ssss', url)
+
+
     const payload = {
       date: thisBooking.datePicker.value,
       hour: thisBooking.hourPicker.value,
@@ -226,15 +237,15 @@ class Booking {
       duration: parseInt(thisBooking.hoursAmount.value),
       ppl: parseInt(thisBooking.peopleAmount.value),
       starters: [],
-      phone: thisBooking.dom.phone.value,
-      address: thisBooking.dom.address.value,
+      phone: '4444444',
+      address: '324234@gmail.com',
     };
 
-    for (let starter of thisBooking.dom.starters) {
-      if (starter.checked == true) {
-        payload.starters.push(starter.value);
-      }
-    }
+    // for (let starter of thisBooking.dom.starters) {
+    //   if (starter.checked == true) {
+    //     payload.starters.push(starter.value);
+    //   }
+    // }
 
     const options = {
       method: 'POST',
